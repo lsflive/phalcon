@@ -19,16 +19,16 @@ class SysMenusController extends UserBase{
 				$where .= $key." LIKE '%".$val."%' AND ";
 			}
 			$where = rtrim($where,'AND ');
-			$data = SysMenus::find(array($where,'order'=>'fid desc,sort desc,id desc'));
+			$data = SysMenus::find([$where,'order'=>'fid desc,sort desc,id desc']);
 			$getUrl = $like['getUrl'];
 		}else{
 			$getUrl = '';
-			$data = SysMenus::find(array('order'=>'fid desc,sort desc,id desc'));
+			$data = SysMenus::find(['order'=>'fid desc,sort desc,id desc']);
 		}
-		$this->view->setVar('Page',$this->getPage(array(
+		$this->view->setVar('Page',$this->getPage([
 			'data'=>$data,
 			'getUrl'=>$getUrl
-		)));
+		]));
 		// 获取菜单
 		$this->view->setVar('Menus',$this->getMenus());
 		// JS
@@ -68,9 +68,9 @@ class SysMenusController extends UserBase{
 			$model = new SysMenus();
 			// 执行添加
 			if($model->save($data)===false){
-				return $this->response->setJsonContent(array('state'=>'n','msg'=>'添加失败！'));
+				return $this->response->setJsonContent(['state'=>'n','msg'=>'添加失败！']);
 			}else{
-				return $this->response->setJsonContent(array('state'=>'y','url'=>'SysMenus','msg'=>'添加成功！'));
+				return $this->response->setJsonContent(['state'=>'y','url'=>'SysMenus','msg'=>'添加成功！']);
 			}
 		}
 	}
@@ -80,7 +80,7 @@ class SysMenusController extends UserBase{
 		// 数据
 		$edit = SysMenus::findFirst('id='.$this->request->getPost('id'));
 		// 所有权限
-		$perm = SysMenuAction::find(array('columns'=>'name,perm'));
+		$perm = SysMenuAction::find(['columns'=>'name,perm']);
 		$this->view->setVar('perm',$perm);
 		// 视图
 		$this->view->setVar('edit',$edit);
@@ -100,12 +100,15 @@ class SysMenusController extends UserBase{
 				'remark'=>trim($this->request->getPost('remark'))
 			];
 			// 实例化
-			$model = SysMenus::findFirst(array('id=:id:','bind'=>array('id'=>$this->request->getPost('id'))));
+			$model = SysMenus::findFirst([
+				'id=:id:',
+				'bind'=>['id'=>$this->request->getPost('id')]
+			]);
 			// 返回信息
 			if($model->save($data)===false){
-				return $this->response->setJsonContent(array('state'=>'n','msg'=>'编辑失败！'));
+				return $this->response->setJsonContent(['state'=>'n','msg'=>'编辑失败！']);
 			}else{
-				return $this->response->setJsonContent(array('state'=>'y','url'=>'SysMenus','msg'=>'编辑成功！'));
+				return $this->response->setJsonContent(['state'=>'y','url'=>'SysMenus','msg'=>'编辑成功！']);
 			}
 		}
 	}
@@ -121,9 +124,9 @@ class SysMenusController extends UserBase{
 			// 数据
 			$model = SysMenus::find('id IN('.$id.')');
 			if($model->delete()===false){
-				return $this->response->setJsonContent(array('state'=>'n','msg'=>'删除失败！'));
+				return $this->response->setJsonContent(['state'=>'n','msg'=>'删除失败！']);
 			}else{
-				return $this->response->setJsonContent(array('state'=>'y','url'=>'SysMenus','msg'=>'删除成功！'));
+				return $this->response->setJsonContent(['state'=>'y','url'=>'SysMenus','msg'=>'删除成功！']);
 			}
 		}
 	}
@@ -132,7 +135,7 @@ class SysMenusController extends UserBase{
 	function getMenuAction(){
 		$fid = $this->request->getPost('fid');
 		// 实例化
-		$mData = SysMenus::find(array('fid='.$fid,'columns'=>'id,title'));
+		$mData = SysMenus::find(['fid='.$fid,'columns'=>'id,title']);
 		// 数据
 		$data = [];
 		foreach($mData as $val){

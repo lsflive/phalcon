@@ -22,16 +22,17 @@ class IndexController extends ControllerBase{
 			$password = md5($this->request->getPost('passwd'));
 			$vcode = strtolower($this->request->getPost('vcode'));
 			$remember = $this->request->getPost('remember');
-
 			// 判断验证码
 			if($vcode != $this->session->get('V_CODE')){
-				return $this->response->setJsonContent(array('status'=>'v','msg'=>'验证码错误！'));
+				return $this->response->setJsonContent(['status'=>'v','msg'=>'验证码错误！']);
 			}else{
 				$this->session->set('V_CODE',rand(1000,9999));
 			}
-
 			// 实例化模型
-			$data = SysAdmin::findFirst(array("(uname = :uname: OR email = :uname: OR tel = :uname:) AND password = :password:",'bind' => array('uname'=>$uname, 'password'=>$password)));
+			$data = SysAdmin::findFirst([
+				"(uname = :uname: OR email = :uname: OR tel = :uname:) AND password = :password:",
+				'bind' => ['uname'=>$uname, 'password'=>$password]
+			]);
 			// 判断结果
 			if(isset($data)){
 				// 是否禁用
@@ -43,12 +44,12 @@ class IndexController extends ControllerBase{
 					// 保存用户信息到Session
 					$this->_registerSession($data,$uname);
 					// 返回跳转URL
-					return $this->response->setJsonContent(array('status'=>'y','url'=>'welcome'));
+					return $this->response->setJsonContent(['status'=>'y','url'=>'welcome']);
 				}else{
-					return $this->response->setJsonContent(array('status'=>'n','msg'=>'该用户已被禁用！'));
+					return $this->response->setJsonContent(['status'=>'n','msg'=>'该用户已被禁用！']);
 				}
 			}else{
-				return $this->response->setJsonContent(array('status'=>'n','msg'=>'用户名或密码错误！'));
+				return $this->response->setJsonContent(['status'=>'n','msg'=>'用户名或密码错误！']);
 			}
 		}
 	}

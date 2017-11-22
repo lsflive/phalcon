@@ -2,6 +2,8 @@
 
 namespace Phalcon\Modules\Admin\Controllers;
 
+use Phalcon\Library\Safety;
+
 use Phalcon\Modules\Admin\Models\SysAdmin;
 use Phalcon\Modules\Admin\Models\SysMenus;
 use Phalcon\Modules\Admin\Models\SysMenuAction;
@@ -20,20 +22,20 @@ class SysAdminsController extends UserBase{
 				$where .= $key." LIKE '%".$val."%' AND ";
 			}
 			$where = rtrim($where,'AND ');
-			$data = SysAdmin::find(array($where,'order'=>'id desc'));
+			$data = SysAdmin::find([$where,'order'=>'id desc']);
 			$getUrl = $like['getUrl'];
 		}else{
 			$getUrl = '';
-			$data = SysAdmin::find(array('order'=>'id desc'));
+			$data = SysAdmin::find(['order'=>'id desc']);
 		}
-		$this->view->setVar('Page',$this->getPage(array(
+		$this->view->setVar('Page',$this->getPage([
 			'data'=>$data,
 			'getUrl'=>$getUrl
-		)));
+		]));
 		// 获取菜单
 		$this->view->setVar('Menus',$this->getMenus());
 		// JS
-		$this->view->setVar('LoadJS', array('system/sys_admin.js'));
+		$this->view->setVar('LoadJS', ['system/sys_admin.js']);
 		// 视图
 		$this->view->setTemplateAfter('main');
 		return $this->view->pick("system/admin/index");
@@ -62,19 +64,31 @@ class SysAdminsController extends UserBase{
 				'position'=>trim($this->request->getPost('position')),
 				'rtime'=>date('Y-m-d H:i:s')
 			];
-			
+			// 验证
+			$res = Safety::isRight('uname',$data['uname']);
+			if($res!==true){return $this->response->setJsonContent(['state'=>'n','msg'=>$res]);}
+			$res = Safety::isRight('passwd',$this->request->getPost('passwd'));
+			if($res!==true){return $this->response->setJsonContent(['state'=>'n','msg'=>$res]);}
+			$res = Safety::isRight('email',$data['email']);
+			if($res!==true){return $this->response->setJsonContent(['state'=>'n','msg'=>$res]);}
+			$res = Safety::isRight('tel',$data['tel']);
+			if($res!==true){return $this->response->setJsonContent(['state'=>'n','msg'=>$res]);}
 			// 实例化
 			$model = new SysAdmin();
 			// 是否存在用户
-			$isNull = $model->findFirst('uname="'.$data['uname'].'"');
+			$isNull = $model->findFirst([
+				"uname = :uname: OR email = :email: OR tel = :tel:",
+				'bind' => array('uname'=>$data['uname'], 'email'=>$data['email'],'tel'=>$data['tel']),
+				'columns'=>'id'
+			]);
 			if($isNull){
-				return $this->response->setJsonContent(array('state'=>'n','msg'=>'该用户名已经存在！'));
+				return $this->response->setJsonContent(['state'=>'n','msg'=>'该用户名已经存在！']);
 			}
 			// 执行添加
 			if($model->save($data)===false){
-				return $this->response->setJsonContent(array('state'=>'n','msg'=>'添加失败！'));
+				return $this->response->setJsonContent(['state'=>'n','msg'=>'添加失败！']);
 			}else{
-				return $this->response->setJsonContent(array('state'=>'y','url'=>'SysAdmins','msg'=>'添加成功！'));
+				return $this->response->setJsonContent(['state'=>'y','url'=>'SysAdmins','msg'=>'添加成功！']);
 			}
 		}
 	}
@@ -92,22 +106,34 @@ class SysAdminsController extends UserBase{
 		if($this->request->isPost()){
 			// 采集数据
 			$data=[
-				'email'=>trim($this->request->getPost('email')),
-				'tel'=>trim($this->request->getPost('tel')),
 				'name'=>trim($this->request->getPost('name')),
 				'department'=>trim($this->request->getPost('department')),
 				'position'=>trim($this->request->getPost('position'))
 			];
 			if($this->request->getPost('passwd')){
-				$data['password'] = md5($this->request->getPost('passwd'));
+				$res = Safety::isRight('passwd',$this->request->getPost('passwd'));
+				if($res!==true){return $this->response->setJsonContent(['state'=>'n','msg'=>$res]);}
+				// 原密码判断
+				$isNull =SysAdmin::findfirst([
+					'id="'.$this->request->getPost('id').'" AND password="'.md5($this->request->getPost('passwd1')).'"',
+					'columns'=>'id'
+				]);
+				if($isNull){
+					$data['password'] = md5($this->request->getPost('passwd'));
+				}else{
+					return $this->response->setJsonContent(['state'=>'n','msg'=>'原密码错误！']);
+				}
 			}
 			// 实例化
-			$model = SysAdmin::findFirst(array('id=:id:','bind'=>array('id'=>$this->request->getPost('id'))));
+			$model = SysAdmin::findFirst([
+				'id=:id:',
+				'bind'=>['id'=>$this->request->getPost('id')]
+			]);
 			// 返回信息
 			if($model->save($data)===false){
-				return $this->response->setJsonContent(array('state'=>'n','msg'=>'编辑失败！'));
+				return $this->response->setJsonContent(['state'=>'n','msg'=>'编辑失败！']);
 			}else{
-				return $this->response->setJsonContent(array('state'=>'y','url'=>'SysAdmins','msg'=>'编辑成功！'));
+				return $this->response->setJsonContent(['state'=>'y','url'=>'SysAdmins','msg'=>'编辑成功！']);
 			}
 		}
 	}
@@ -123,9 +149,9 @@ class SysAdminsController extends UserBase{
 			// 数据
 			$model = SysAdmin::find('id IN('.$id.')');
 			if($model->delete()===false){
-				return $this->response->setJsonContent(array('state'=>'n','msg'=>'删除失败！'));
+				return $this->response->setJsonContent(['state'=>'n','msg'=>'删除失败！']);
 			}else{
-				return $this->response->setJsonContent(array('state'=>'y','url'=>'SysAdmins','msg'=>'删除成功！'));
+				return $this->response->setJsonContent(['state'=>'y','url'=>'SysAdmins','msg'=>'删除成功！']);
 			}
 		}
 	}
@@ -143,11 +169,33 @@ class SysAdminsController extends UserBase{
 			$val->state = $this->request->getPost('state');
 			// 更新
 			if($val->save()===false){
-				return $this->response->setJsonContent(array('state'=>'n','msg'=>'审核失败！'));
+				return $this->response->setJsonContent(['state'=>'n','msg'=>'审核失败！']);
 			}
 		}
 		// 返回信息
-		return $this->response->setJsonContent(array('state'=>'y','url'=>'SysAdmins','msg'=>'审核成功！'));
+		return $this->response->setJsonContent(['state'=>'y','url'=>'SysAdmins','msg'=>'审核成功！']);
+	}
+
+	/* 是否存在 */
+	function isUnameAction(){
+		$name = $this->request->getPost('name');
+		$val = trim($this->request->getPost('val'));
+		// 是否提交
+		if(!$name || !$val){return false;}
+		// 条件
+		$where = '';
+		if($name=='uname'){
+			$where = 'uname="'.$val.'"';
+		}elseif($name=='tel'){
+			$where = 'tel="'.$val.'"';
+		}elseif($name=='email'){
+			$where = 'email="'.$val.'"';
+		}
+		// 查询
+		if($where){
+			$data = SysAdmin::findfirst([$where,'columns'=>'id']);
+			return $data?$this->response->setJsonContent(['state'=>'y']):$this->response->setJsonContent(['state'=>'n']);
+		}
 	}
 
 	/* 权限 */
@@ -217,9 +265,9 @@ class SysAdminsController extends UserBase{
 			$model->perm = trim($this->request->getPost('perm'));;
 			// 返回信息
 			if($model->save()===false){
-				return $this->response->setJsonContent(array('state'=>'n','msg'=>'权限编辑失败！'));
+				return $this->response->setJsonContent(['state'=>'n','msg'=>'权限编辑失败！']);
 			}else{
-				return $this->response->setJsonContent(array('state'=>'y','url'=>'SysAdmins'));
+				return $this->response->setJsonContent(['state'=>'y','url'=>'SysAdmins']);
 			}
 		}
 	}
