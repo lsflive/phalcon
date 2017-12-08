@@ -8,6 +8,7 @@ use Phalcon\Modules\Admin\Models\SysAdmin;
 * 后台：登录
 */
 class IndexController extends ControllerBase{
+	
 	/* 首页 */
 	public function indexAction(){
 		$this->view->setTemplateAfter('login');

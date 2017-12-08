@@ -5,7 +5,7 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="author" content="WebMIS" />
 	<title>管理员控制台</title>
-	<link rel="icon" type="image/png" href="favicon.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="/favicon.png" sizes="32x32" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta name="format-detection" content="telephone=no">
 	<meta name="msapplication-tap-highlight" content="no">
@@ -15,7 +15,6 @@
 
 <body class="body_login">
 	<!--[if lt IE 9]><div class="isIE"><p><b>浏览器版本过低</b><br>请使用IE9以上或chrome、firefox、safari等最新版浏览器！</p></div><![endif]-->
-	<!--	Login -->
 	<div class="login_body">
 		<h1 id="webmisVersion" class="login_title">WebMIS</h1>
 		<div class="login_ct">
