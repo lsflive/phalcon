@@ -7,7 +7,7 @@ class Inc{
 	/* URL */
 	public function BaseUrl($url=''){
 		$base_url = $_SERVER['SERVER_PORT']=='443'?'https://':'http://';
-		$base_url .= $_SERVER['HTTP_HOST'].$url;
+		$base_url .= $_SERVER['HTTP_HOST'].'/'.$url;
 		return $base_url;
 	}
 
