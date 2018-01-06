@@ -12,6 +12,7 @@ class ControllerBase extends Controller{
 	/* 构造函数 */
 	public function initialize(){
 		$this->view->setVar('base_url',$this->url->get($this->dispatcher->getModuleName().'/'));
+		$this->view->setVar('getUrl','');
 	}
 
 	/* 跳转 */

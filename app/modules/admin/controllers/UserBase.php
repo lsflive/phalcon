@@ -18,6 +18,7 @@ class UserBase extends ControllerBase{
 	public function initialize(){
 		// 获取网址
 		$this->view->setVar('base_url',$this->url->get($this->dispatcher->getModuleName().'/'));
+		$this->view->setVar('getUrl','');
 		// 是否登录
 		$admin = $this->session->get('Admin');
 		$ltime = $admin['ltime'];

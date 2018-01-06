@@ -13,8 +13,9 @@
 	<link rel="stylesheet" type="text/css" href="/themes/admin/main.css" />
 </head>
 
-<body class="body_login">
+<body>
 	<!--[if lt IE 9]><div class="isIE"><p><b>浏览器版本过低</b><br>请使用IE9以上或chrome、firefox、safari等最新版浏览器！</p></div><![endif]-->
+<div class="body_login">
 	<div class="login_body">
 		<h1 id="webmisVersion" class="login_title">WebMIS</h1>
 		<div class="login_ct">
@@ -35,6 +36,7 @@
 			Copyright © WebMIS All rights are reserved.
 		</div>
 	</div>
+</div>
 <div id="BaseURL" style="display: none;">{{base_url}}</div>
 <script type="text/javascript" src="/webmis/plugin/jquery/jquery-3.min.js"></script>
 <script type="text/javascript" src="/webmis/jquery.webmis.js"></script>
