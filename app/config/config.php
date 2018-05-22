@@ -27,7 +27,7 @@ return new \Phalcon\Config([
 		'migrationsDir'=>APP_PATH.'/migrations/',
 		'cacheDir'=> BASE_PATH.'/cache/',
 		// 项目路径
-		'baseUri'=>'/',
+		'baseUri'=>'',
 		// 'baseUri'=>$_SERVER["PHP_SELF"].'?_url=/',
 	],
 	// CLI结果新行
