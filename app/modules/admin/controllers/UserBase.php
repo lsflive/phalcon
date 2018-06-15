@@ -21,10 +21,8 @@ class UserBase extends ControllerBase{
 		$this->view->setVar('getUrl','');
 		// 是否登录
 		$admin = $this->session->get('Admin');
-		$ltime = $admin['ltime'];
-		$ntime = time();
-		if(!$admin['logged_in'] || $ltime<$ntime){
-			return $this->redirect('index/loginOut');
+		if(!$admin || !$admin['login'] || $admin['ltime']<time()){
+			return $this->redirect('index/logout');
 		}else{
 			$_SESSION['Admin']['ltime'] = time()+1800;
 		}
@@ -39,7 +37,7 @@ class UserBase extends ControllerBase{
 		// 判断权限
 		$mid = SysMenus::findFirst(array('url="'.$this->dispatcher->getControllerName().'"','columns'=>'id'));
 		if(!isset($data[$mid->id])){
-			return $this->redirect('index/loginOut');
+			return $this->redirect('index/logout');
 		}
 		// 赋值权限
 		self::$perm = $data;

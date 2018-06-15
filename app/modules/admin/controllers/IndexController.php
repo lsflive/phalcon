@@ -2,6 +2,7 @@
 
 namespace Phalcon\Modules\Admin\Controllers;
 
+use Phalcon\Library\Images;
 use Phalcon\Modules\Admin\Models\SysAdmin;
 
 /**
@@ -63,22 +64,19 @@ class IndexController extends ControllerBase{
 			'name'=>$data->name,
 			'department'=>$data->department,
 			'position'=>$data->position,
-			'ltime' => time()+1800,
-			'logged_in' => TRUE,
+			'ltime'=>time()+1800,
+			'login'=>TRUE,
 		));
 	}
 
 	/* 退出 */
-	public function loginOutAction(){
+	public function logoutAction(){
 		$this->session->remove('Admin');
 		$this->redirect('index');
 	}
 
 	/* 验证码 */
 	function vcodeAction(){
-		/* 第三方类 */
-		$code = new \Phalcon\Library\Images();
-		// 验证码
-		$code->getCode(80,23);
+		Images::getCode(90,36);
 	}
 }
