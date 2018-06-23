@@ -12,13 +12,12 @@ use Phalcon\Modules\Admin\Models\SysMenuAction;
 class UserBase extends ControllerBase{
 
 	static private $perm = '';
+	static private $mid=[];
 	static private $cid=[];
 
 	/* 构造函数 */
 	public function initialize(){
-		// 获取网址
-		$this->view->setVar('base_url',$this->url->get($this->dispatcher->getModuleName().'/'));
-		$this->view->setVar('getUrl','');
+		parent::initialize();
 		// 是否登录
 		$admin = $this->session->get('Admin');
 		if(!$admin || !$admin['login'] || $admin['ltime']<time()){
@@ -35,8 +34,8 @@ class UserBase extends ControllerBase{
 			$data[$a[0]] = $a[1];
 		}
 		// 判断权限
-		$mid = SysMenus::findFirst(array('url="'.$this->dispatcher->getControllerName().'"','columns'=>'id'));
-		if(!isset($data[$mid->id])){
+		self::$mid = SysMenus::findFirst(array('url="'.$this->dispatcher->getControllerName().'"','columns'=>'id,fid,title'));
+		if(!isset($data[self::$mid->id])){
 			return $this->redirect('index/logout');
 		}
 		// 赋值权限
@@ -48,17 +47,16 @@ class UserBase extends ControllerBase{
 	/* 获取菜单 */
 	function getMenus(){
 		// CID
-		$C = SysMenus::findFirst(['url="'.$this->dispatcher->getControllerName().'"','columns'=>'id,fid,title']);
-		self::$cid[] = $C->id;
-		$fids = self::getCid($C->fid);
+		self::$cid[] = self::$mid->id;
+		self::getCid(self::$mid->id);
 		krsort(self::$cid);
 		self::$cid = array_values(self::$cid);
 		// 数据
 		return [
-			'Ctitle'=>$C->title,
+			'Ctitle'=>self::$mid->title,
 			'CID'=>self::$cid,
 			// 获取菜单动作
-			'action'=>self::actionMenus(self::$perm[end(self::$cid)]),
+			'action'=>self::actionMenus(self::$perm[self::$mid->id]),
 			'Data'=>self::getMenu()
 		];
 	}

@@ -3,7 +3,7 @@
 namespace Phalcon\Modules\Admin\Controllers;
 
 /**
-* 后台：首页
+* 后台：系统
 */
 class SystemController extends UserBase{
 	/* 首页 */
