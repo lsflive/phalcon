@@ -1,11 +1,11 @@
 <?php
 
-namespace Phalcon\Modules\Admin\Controllers;
+namespace app\modules\admin\controller;
 
 /**
-* 后台：首页
+* 后台：系统
 */
-class WebController extends UserBase{
+class SystemController extends UserBase{
 	/* 首页 */
 	public function indexAction(){
 		// 获取菜单
@@ -13,6 +13,6 @@ class WebController extends UserBase{
 		$this->view->setVar('Menus',$menus);
 		// 视图
 		$this->view->setTemplateAfter('main');
-		$this->view->pick("web/index");
+		$this->view->pick("system/index");
 	}
 }

@@ -4,7 +4,7 @@
 * 安全验证类
 */
 
-namespace Phalcon\Library;
+namespace app\library;
 
 class Safety{
 	static function isRight($name='',$val=''){

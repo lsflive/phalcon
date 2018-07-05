@@ -1,42 +1,38 @@
 <?php
 
-use Phalcon\Loader;
-use Phalcon\Mvc\Model\Metadata\Memory as MetaDataAdapter;
-
-/**
-* 公共：配置文件
-*/
-$di->setShared('config', function () {
-	return include APP_PATH . "/config/config.php";
-});
+use Phalcon\Mvc\Url as UrlResolver;
 
 /**
 * 公共：数据库链接
 */
 $di->setShared('db', function () {
+	// 配置文件
 	$config = $this->getConfig();
-
-	$class = 'Phalcon\Db\Adapter\Pdo\\' . $config->database->adapter;
+	// 参数
 	$params = [
-	'host'     => $config->database->host,
-	'username' => $config->database->username,
-	'password' => $config->database->password,
-	'dbname'   => $config->database->dbname,
-	'charset'  => $config->database->charset
+		'host'=>$config->database->host,
+		'username'=>$config->database->username,
+		'password'=>$config->database->password,
+		'dbname'=>$config->database->dbname,
+		'charset'=>$config->database->charset
 	];
-
-	if ($config->database->adapter == 'Postgresql') {
-		unset($params['charset']);
-	}
-
-	$connection = new $class($params);
-
-	return $connection;
+	// 删除编码
+	if ($config->database->adapter == 'Postgresql') unset($params['charset']);
+	// 命名空间
+	$class = 'Phalcon\Db\Adapter\Pdo\\' . $config->database->adapter;
+	return new $class($params);
 });
 
 /**
-* 元数据适配器
+* 注册：URL
 */
-$di->setShared('modelsMetadata', function () {
-	return new MetaDataAdapter();
+$di->setShared('url', function () {
+	// 配置文件
+	$config = $this->getConfig();
+	// 公共类
+	$inc = new \app\library\Inc();
+	// 设置网址
+	$url = new UrlResolver();
+	$url->setBaseUri($inc->BaseUrl().$config->application->baseUri);
+	return $url;
 });

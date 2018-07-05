@@ -74,7 +74,7 @@ if(isset($val1->menus)){foreach ($val1->menus as $val2){
 		<div class="ct_left_bg"></div>
 		<div class="ct_right">
 			<div class="ct_top"></div>
-{{content() }}
+{{content()}}
 		</div>
 	</div>
 <div id="BaseURL" style="display: none;">{{base_url}}</div>

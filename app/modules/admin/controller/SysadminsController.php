@@ -1,12 +1,12 @@
 <?php
 
-namespace Phalcon\Modules\Admin\Controllers;
+namespace app\modules\admin\controller;
 
-use Phalcon\Library\Safety;
+use app\library\Safety;
 
-use Phalcon\Modules\Admin\Models\SysAdmin;
-use Phalcon\Modules\Admin\Models\SysMenus;
-use Phalcon\Modules\Admin\Models\SysMenuAction;
+use app\modules\admin\model\SysAdmin;
+use app\modules\admin\model\SysMenus;
+use app\modules\admin\model\SysMenuAction;
 
 /**
 * 后台：系统用户

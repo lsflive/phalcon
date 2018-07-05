@@ -1,10 +1,10 @@
 <?php
 
-namespace Phalcon\Modules\Admin\Controllers;
+namespace app\modules\admin\controller;
 
-use Phalcon\Modules\Admin\Models\SysAdmin;
-use Phalcon\Modules\Admin\Models\SysMenus;
-use Phalcon\Modules\Admin\Models\SysMenuAction;
+use app\modules\admin\model\SysAdmin;
+use app\modules\admin\model\SysMenus;
+use app\modules\admin\model\SysMenuAction;
 
 /**
 * 后台：首页
@@ -26,7 +26,7 @@ class UserBase extends ControllerBase{
 			$_SESSION['Admin']['ltime'] = time()+1800;
 		}
 		// 菜单权限
-		$perm = SysAdmin::findFirst(array('id='.$admin['id'],'columns'=>'perm'));
+		$perm = SysAdmin::findFirst(['id='.$admin['id'],'columns'=>'perm']);
 		$data = [];
 		$arr = explode(' ',$perm->perm);
 		foreach($arr as $val){
@@ -34,7 +34,7 @@ class UserBase extends ControllerBase{
 			$data[$a[0]] = $a[1];
 		}
 		// 判断权限
-		self::$mid = SysMenus::findFirst(array('url="'.$this->dispatcher->getControllerName().'"','columns'=>'id,fid,title'));
+		self::$mid = SysMenus::findFirst(['url="'.$this->dispatcher->getControllerName().'"','columns'=>'id,fid,title']);
 		if(!isset($data[self::$mid->id])){
 			return $this->redirect('index/logout');
 		}

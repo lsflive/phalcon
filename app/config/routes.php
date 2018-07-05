@@ -1,12 +1,8 @@
 <?php
-
+/* 路由 */
 $router = $di->getRouter();
-
-/**
- * 路由
- */
 foreach ($app->getModules() as $key => $module) {
-	$namespace = preg_replace('/Module$/', 'Controllers', $module["className"]);
+	$namespace = preg_replace('/module$/', 'controller', $module["className"]);
 	$router->add('/'.$key.'/:params', [
 		'namespace' => $namespace,
 		'module' => $key,

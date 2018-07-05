@@ -1,9 +1,9 @@
 <?php
 
-namespace Phalcon\Modules\Admin\Controllers;
+namespace app\modules\admin\controller;
 
-use Phalcon\Library\Images;
-use Phalcon\Modules\Admin\Models\SysAdmin;
+use app\library\Images;
+use app\modules\admin\model\SysAdmin;
 
 /**
 * 后台：登录

@@ -1,6 +1,6 @@
 <?php
 
-namespace Phalcon\Modules\Admin\Controllers;
+namespace app\modules\admin\controller;
 
 /**
 * 后台：首页

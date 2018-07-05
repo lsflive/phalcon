@@ -1,9 +1,9 @@
 <?php
 
-namespace Phalcon\Modules\Admin\Controllers;
+namespace app\modules\admin\controller;
 
-use Phalcon\Modules\Admin\Models\SysMenus;
-use Phalcon\Modules\Admin\Models\SysMenuAction;
+use app\modules\admin\model\SysMenus;
+use app\modules\admin\model\SysMenuAction;
 
 /**
 * 后台：菜单管理

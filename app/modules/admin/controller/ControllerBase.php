@@ -1,5 +1,5 @@
 <?php
-namespace Phalcon\Modules\Admin\Controllers;
+namespace app\modules\admin\controller;
 
 use Phalcon\Mvc\Controller;
 use Phalcon\Paginator\Adapter\Model as PaginatorModel;
@@ -29,7 +29,7 @@ class ControllerBase extends Controller{
 			// Page
 			$num = $this->request->getQuery('page', 'int');
 			$page = empty($num)?1:$num;
-			$paginator   = new PaginatorModel(array('data'=>$config['data'],'limit'=>$limit,'page'=>$page));
+			$paginator   = new PaginatorModel(['data'=>$config['data'],'limit'=>$limit,'page'=>$page]);
 			$Page = $paginator->getPaginate();
 			// Page Html
 			$html = '';

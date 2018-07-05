@@ -1,6 +1,6 @@
 <?php
 
-namespace Phalcon\Library;
+namespace app\library;
 
 /**
 * 图像处理类
