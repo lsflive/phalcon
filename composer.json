@@ -1,0 +1,16 @@
+{
+    "name": "webmiss/phalcon",
+    "description": "The Webmis Project",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "webmis",
+            "email": "klingsoul@163.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^5.4",
+    }
+}

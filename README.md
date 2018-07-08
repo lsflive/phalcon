@@ -1,15 +1,28 @@
 # WebMIS
-WebMIS is just a development idea.<br>
+WebMIS是轻量级、高性能、面向对象的HMVC框架！<br>
 Home: http://phalcon.webmis.vip/<br>
 Admin: http://phalcon.webmis.vip/admin/<br>
 uanme: admin  passwd: admin
 
-# Install
-```bash
-Database : public/db/mvc.sql
+# 安装
+### 1) Composer方式
+``` bash
+composer create-project webmiss/phalcon=1.0.* phalcon
+```
+或者 composer.json
+``` bash
+{
+    "require": {
+        "webmiss/phalcon":"1.0.*"
+    }
+}
+```
+### 导入数据库
+``` bash
+public/db/mvc.sql
 ```
 
-# Configuration
+# 美化URL
 ### 1) Apache（public/.htaccess）
 ```bash
 # 编码
