@@ -17,7 +17,7 @@ composer create-project webmiss/phalcon=1.0.* phalcon
     }
 }
 ```
-### 导入数据库
+### 2) 导入数据库
 ``` bash
 public/db/mvc.sql
 ```
