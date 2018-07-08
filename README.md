@@ -1,5 +1,5 @@
 # WebMIS
-WebMIS是轻量级、高性能、面向对象的HMVC框架！<br>
+WebMIS基于Phalcon轻量级、高性能、面向对象的HMVC框架！<br>
 Home: http://phalcon.webmis.vip/<br>
 Admin: http://phalcon.webmis.vip/admin/<br>
 uanme: admin  passwd: admin
