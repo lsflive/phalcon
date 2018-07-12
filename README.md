@@ -5,9 +5,9 @@ Admin: http://phalcon.webmis.vip/admin/<br>
 uanme: admin  passwd: admin
 
 # 安装
-### 1) 克隆项目
+### 1) 创建项目
 ``` bash
-git clone https://github.com/webmiss/phalcon phalcon
+composer create-project webmiss/phalcon phalcon
 ```
 ### 2) 导入数据库
 ``` bash
