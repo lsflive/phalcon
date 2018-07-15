@@ -1,4 +1,4 @@
-<form action="{{base_url}}SysAdmins/editData" method="post" id="Form">
+<form action="<?php echo $this->url->get($this->dispatcher->getControllerName().'/editData');?>" method="post" id="Form">
 <table class="table_add">
 	<tr>
 		<td class="tright" width="90"></td>
@@ -6,9 +6,7 @@
 	</tr>
 	<tr>
 		<td class="tright">用户名:</td>
-		<td>
-			{{edit.uname}}
-		</td>
+		<td><?php echo $edit->uname;?></td>
 	</tr>
 	<tr>
 		<td class="tright">原密码:</td>
@@ -34,26 +32,26 @@
 	<tr>
 		<td class="tright">姓名:</td>
 		<td>
-			<input type="text" name="name" value="{{edit.name}}" class="input" style="width: 30%;" />
+			<input type="text" name="name" value="<?php echo $edit->name;?>" class="input" style="width: 30%;" />
 		</td>
 	</tr>
 	<tr>
 		<td class="tright">部门:</td>
 		<td>
-			<input type="text" name="department" value="{{edit.department}}" class="input" style="width: 60%;" />
+			<input type="text" name="department" value="<?php echo $edit->department;?>" class="input" style="width: 60%;" />
 		</td>
 	</tr>
 	<tr>
 		<td class="tright">职务:</td>
 		<td>
-			<input type="text" name="position" value="{{edit.position}}" class="input" style="width: 60%;" />
+			<input type="text" name="position" value="<?php echo $edit->position;?>" class="input" style="width: 60%;" />
 		</td>
 	</tr>
 	<tr>
 		<td>&nbsp;</td>
 		<td class="sub">
 			<label class="webmis_bottom">编辑<input type="submit" class="noDisplay" /></label>
-			<input type="hidden" name="id" value="{{edit.id}}" />
+			<input type="hidden" name="id" value="<?php echo $edit->id;?>" />
 		</td>
 	</tr>
 </table>

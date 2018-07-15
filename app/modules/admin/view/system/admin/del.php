@@ -1,4 +1,4 @@
-<form action="{{base_url}}SysAdmins/delData" method="post" id="Form">
+<form action="<?php echo $this->url->get($this->dispatcher->getControllerName().'/delData');?>" method="post" id="Form">
 <table class="table_add">
 	<tr>
 		<td class="center sub">

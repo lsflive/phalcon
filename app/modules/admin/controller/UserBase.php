@@ -2,6 +2,8 @@
 
 namespace app\modules\admin\controller;
 
+use Phalcon\Mvc\Controller;
+
 use app\modules\admin\model\SysAdmin;
 use app\modules\admin\model\SysMenus;
 use app\modules\admin\model\SysMenuAction;
@@ -9,7 +11,7 @@ use app\modules\admin\model\SysMenuAction;
 /**
 * 后台：首页
 */
-class UserBase extends ControllerBase{
+class UserBase extends Controller{
 
 	static private $perm = '';
 	static private $mid=[];
@@ -17,11 +19,10 @@ class UserBase extends ControllerBase{
 
 	/* 构造函数 */
 	public function initialize(){
-		parent::initialize();
 		// 是否登录
 		$admin = $this->session->get('Admin');
 		if(!$admin || !$admin['login'] || $admin['ltime']<time()){
-			return $this->redirect('index/logout');
+			return $this->response->redirect('index/logout');
 		}else{
 			$_SESSION['Admin']['ltime'] = time()+1800;
 		}
@@ -36,7 +37,7 @@ class UserBase extends ControllerBase{
 		// 判断权限
 		self::$mid = SysMenus::findFirst(['url="'.$this->dispatcher->getControllerName().'"','columns'=>'id,fid,title']);
 		if(!isset($data[self::$mid->id])){
-			return $this->redirect('index/logout');
+			return $this->response->redirect('index/logout');
 		}
 		// 赋值权限
 		self::$perm = $data;

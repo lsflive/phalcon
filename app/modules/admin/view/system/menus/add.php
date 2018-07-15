@@ -1,4 +1,4 @@
-<form action="{{base_url}}SysMenus/addData" method="post" id="Form">
+<form action="<?php echo $this->url->get($this->dispatcher->getControllerName().'/addData');?>" method="post" id="Form">
 <table class="table_add">
 	<tr>
 		<td class="tright" width="90"></td>
@@ -27,7 +27,7 @@
 		<td class="tright">权限:</td>
 		<td id="PermVal">
 <?php foreach($perm as $val){ ?>
-			<input type="checkbox" class="Checkbox" value="{{val.perm}}" /><span class="inputText">{{val.name}}</span>
+			<input type="checkbox" class="Checkbox" value="<?php echo $val->perm;?>" /><span class="inputText"><?php echo $val->name;?></span>
 <?php }?>
 			<input type="hidden" id="menusPerm" name="perm" value="0" />
 		</td>

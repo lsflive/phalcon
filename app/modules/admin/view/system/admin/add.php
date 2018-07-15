@@ -1,4 +1,4 @@
-<form action="{{base_url}}SysAdmins/addData" method="post" id="Form">
+<form action="<?php echo $this->url->get($this->dispatcher->getControllerName().'/addData');?>" method="post" id="Form">
 <table class="table_add">
 	<tr>
 		<td class="tright" width="90"></td>

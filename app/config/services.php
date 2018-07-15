@@ -33,6 +33,6 @@ $di->setShared('url', function () {
 	$inc = new \app\library\Inc();
 	// 设置网址
 	$url = new UrlResolver();
-	$url->setBaseUri($inc->BaseUrl().$config->application->baseUri);
+	$url->setBaseUri($inc->BaseUrl().$this->getDispatcher()->getModuleName().'/'.$config->application->baseUri);
 	return $url;
 });

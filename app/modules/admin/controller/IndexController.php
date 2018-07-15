@@ -2,13 +2,14 @@
 
 namespace app\modules\admin\controller;
 
+use Phalcon\Mvc\Controller;
 use app\library\Images;
 use app\modules\admin\model\SysAdmin;
 
 /**
 * 后台：登录
 */
-class IndexController extends ControllerBase{
+class IndexController extends Controller{
 	
 	/* 首页 */
 	public function indexAction(){
@@ -58,7 +59,7 @@ class IndexController extends ControllerBase{
 	/* 退出 */
 	public function logoutAction(){
 		$this->session->remove('Admin');
-		$this->redirect('index');
+		$this->response->redirect('index');
 	}
 
 	/* 验证码 */

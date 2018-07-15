@@ -14,32 +14,32 @@ foreach($Menus as $m1){
 	$ck1 = isset($permArr[$m1->id])?' checked':'';
 ?>
 	<div id="One" class="perm">
-		<span class="text"><input type="checkbox" value="{{m1.id}}"{{ck1}} /></span>
-		<span>{{m1.title}}</span>
+		<span class="text"><input type="checkbox" value="<?php echo $m1->id;?>"<?php echo $ck1;?> /></span>
+		<span><?php echo $m1->title;?></span>
 	</div>
 <?php
 foreach($m1->menus as $m2){
 	$ck2 = isset($permArr[$m2->id])?' checked':'';
 ?>
 	<div id="Two" class="perm">
-		<span class="text" style="margin-left: 1.5em;"><input type="checkbox" value="{{m2.id}}"{{ck2}} /></span>
-		<span>{{m2.title}}</span>
+		<span class="text" style="margin-left: 1.5em;"><input type="checkbox" value="<?php echo $m2->id;?>"<?php echo $ck2;?> /></span>
+		<span><?php echo $m2->title;?></span>
 	</div>
 <?php
 foreach($m2->menus as $m3){
 	$ck3 = isset($permArr[$m3->id])?' checked':'';
 ?>
 	<div class="perm perm_action">
-		<span class="text" style="margin-left: 3em;"><input type="checkbox" id="Three" value="{{m3.id}}"{{ck3}} /></span>
+		<span class="text" style="margin-left: 3em;"><input type="checkbox" id="Three" value="<?php echo $m3->id;?>"<?php echo $ck3;?> /></span>
 		<span><?php echo $m3->title;?></span>
-		<span id="Action_{{m3.id}}">
+		<span id="Action_<?php echo $m3->id;?>">
 			<span>（</span>
 <?php
 foreach($Perm as $val){
 	if(intval($m3->perm)&intval($val->perm)){
-		$checked = isset($permArr[$m3->id])?' checked':'';
+		$checked = isset($permArr[$m3->id])&&(intval($permArr[$m3->id])&intval($val->perm))?' checked':'';
 ?>
-			<span class="text"><input type="checkbox" value="{{val.perm}}"{{checked}} /></span>
+			<span class="text"><input type="checkbox" value="<?php echo $val->perm;?>"<?php echo $checked;?> /></span>
 			<span><?php echo $val->name;?></span>
 <?php }}?>
 		 	<span>&nbsp;&nbsp;）</span>

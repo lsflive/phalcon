@@ -18,6 +18,6 @@ a:hover{color: #FF6600;}
 </style>
 </head>
 <body>
-	<div class="ct">{{content()}}</div>
+	<div class="ct"><?php echo $this->getContent(); ?></div>
 </body>
 </html>

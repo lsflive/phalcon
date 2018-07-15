@@ -57,7 +57,7 @@ try {
 	require APP_PATH . '/config/routes.php';
 	
 	// 执行
-	echo $app->handle()->getContent();
+	$app->handle()->send();
 	
 } catch (\Exception $e) {
 	echo $e->getMessage() . '<br>';

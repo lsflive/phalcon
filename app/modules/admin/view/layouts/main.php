@@ -14,7 +14,7 @@
 	<script type="text/javascript" src="/webmis/jquery.webmis.js"></script>
 	<script type="text/javascript" src="/themes/admin/main.js"></script>
 <?php if(@$LoadJS){foreach($LoadJS as $val){?>
-	<script type="text/javascript" src="/themes/admin/js/{{val}}"></script>
+	<script type="text/javascript" src="/themes/admin/js/<?php echo $val;?>"></script>
 <?php }}?>
 </head>
 <body class="top_bg">
@@ -33,21 +33,21 @@ foreach($Menus['Data'] as $val){
 		$an = 'nav_an2';
 	}
 ?>
-			<li><a href="{{base_url~val['url']}}" class="{{an}}"><em class="{{val['ico']}}"></em><span>{{val['title']}}</span></a></li>
+			<li><a href="<?php echo $this->url->get($val['url']);?>" class="<?php echo $an;?>"><em class="<?php echo $val['ico'];?>"></em><span><?php echo $val['title'];?></span></a></li>
 <?php }?>
 		</ul>
 		<div class="top_link">
 			<span id="Menu" class="icon menu"><em></em></span>
-			<span class="uname">{{Uinfo['uname']}}</span>
+			<span class="uname"><?php echo $Uinfo['uname'];?></span>
 			<span class="icon user">
 				<em></em>
 				<span class="info">
 					<span class="ct">
-						部门: {{Uinfo['department']}}<br>
-						职务: {{Uinfo['position']}}
+						部门: <?php echo $Uinfo['department'];?><br>
+						职务: <?php echo $Uinfo['position'];?>
 					</span>
 					<a href="" class="btop">修改密码</a>
-					<a href="{{base_url}}index/logout" class="btop center">注销</a>
+					<a href="<?php echo $this->url->get('index/logout');?>" class="btop center">注销</a>
 				</span>
 			</span>
 		</div>
@@ -59,14 +59,18 @@ foreach($Menus['Data'] as $val){
 foreach ($MenusLeft as $val1){
 	$ico = $val1->ico?'<em class="'.$val1->ico.'"></em>':'';
 ?>
-			<div class="left_title">{{ico~val1.title}}</div>
+			<div class="left_title"><?php echo $ico,$val1->title;?></div>
 			<ul class="left_list">
 <?php
 if(isset($val1->menus)){foreach ($val1->menus as $val2){
 	$ico = $val2->ico?'<em class="'.$val2->ico.'"></em>':'';
 	$an = isset($Menus['CID'][2])&&$val2->id==$Menus['CID'][2]?'left_an1':'left_an2';
 ?>
-				<li><a href="{{base_url~val2['url']}}" class="{{an}}">{{ico}}<span>{{val2['title']}}</span></a></li>
+				<li>
+					<a href="<?php echo $val2['url']; ?>" class="<?php echo $an;?>">
+						<?php echo $ico,'<span>',$val2['title'],'</span>';?>
+					</a>
+				</li>
 <?php }}?>
 			</ul>
 <?php }?>
@@ -74,10 +78,10 @@ if(isset($val1->menus)){foreach ($val1->menus as $val2){
 		<div class="ct_left_bg"></div>
 		<div class="ct_right">
 			<div class="ct_top"></div>
-{{content()}}
+<?php echo $this->getContent(); ?>
 		</div>
 	</div>
-<div id="BaseURL" style="display: none;">{{base_url}}</div>
-<div id="GetUrl" style="display: none;">{{getUrl}}</div>
+<div id="BaseURL" style="display: none;"><?php echo $this->url->get();?></div>
+<div id="GetUrl" style="display: none;"><?php echo isset($getUrl)?$getUrl:'';?></div>
 </body>
 </html>

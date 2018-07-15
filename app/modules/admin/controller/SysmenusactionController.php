@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\controller;
 
+use app\library\Page;
 use app\modules\admin\model\SysMenuAction;
 
 /**
@@ -12,7 +13,7 @@ class SysMenusActionController extends UserBase{
 	public function indexAction(){
 		// Page
 		if(isset($_GET['search'])){
-			$like = $this->pageWhere();
+			$like = Page::where();
 			$where = '';
 			foreach ($like['data'] as $key => $val){
 				$where .= $key." LIKE '%".$val."%' AND ";
@@ -20,11 +21,13 @@ class SysMenusActionController extends UserBase{
 			$where = rtrim($where,'AND ');
 			$data = SysMenuAction::find([$where,'order'=>'id desc']);
 			$getUrl = $like['getUrl'];
+			$this->view->setVar('getUrl',$like['search']);
 		}else{
 			$getUrl = '';
 			$data = SysMenuAction::find(['order'=>'id desc']);
 		}
-		$this->view->setVar('Page',$this->getPage([
+		$this->view->setVar('Page',Page::get([
+			'controller'=>$this->dispatcher->getModuleName().'/'.$this->dispatcher->getControllerName(),
 			'data'=>$data,
 			'getUrl'=>$getUrl
 		]));

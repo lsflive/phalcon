@@ -2,6 +2,8 @@
 
 namespace app\library;
 
+use Phalcon\Session\Adapter\Files as SessionAdapter;
+
 /**
 * 图像处理类
 */
@@ -45,9 +47,10 @@ class Images{
 			// 填充图片
 			imagefttext($image, 16, rand(10,30), $x, $y, $fontcolor, $fonts, $fontContent);
 		}
-
 		// 保存验证码
-		$_SESSION['V_CODE'] = strtolower($code);
+		$session = new SessionAdapter();
+		$session->start();
+		$session->set('V_CODE',strtolower($code));
 
 		/* 输出到浏览器 */
 		header('content-type: image/png'); 	// 声明验证码的类型

@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\controller;
 
+use app\library\Page;
 use app\library\Safety;
 
 use app\modules\admin\model\SysAdmin;
@@ -16,7 +17,7 @@ class SysAdminsController extends UserBase{
 	function indexAction(){
 		// Page
 		if(isset($_GET['search'])){
-			$like = $this->pageWhere();
+			$like = Page::where();
 			$where = '';
 			foreach ($like['data'] as $key => $val){
 				$where .= $key." LIKE '%".$val."%' AND ";
@@ -24,11 +25,13 @@ class SysAdminsController extends UserBase{
 			$where = rtrim($where,'AND ');
 			$data = SysAdmin::find([$where,'order'=>'id desc']);
 			$getUrl = $like['getUrl'];
+			$this->view->setVar('getUrl',$like['search']);
 		}else{
 			$getUrl = '';
 			$data = SysAdmin::find(['order'=>'id desc']);
 		}
-		$this->view->setVar('Page',$this->getPage([
+		$this->view->setVar('Page',Page::get([
+			'controller'=>$this->dispatcher->getModuleName().'/'.$this->dispatcher->getControllerName(),
 			'data'=>$data,
 			'getUrl'=>$getUrl
 		]));
